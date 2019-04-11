@@ -48,7 +48,8 @@ class ArticleFormType extends AbstractType
                 },
                 'placeholder' => 'Choose an author',
                 'choices' => $this->userRepository
-                            ->findAllEmailAplphabetical()
+                            ->findAllEmailAplphabetical(),
+                'invalid_message' => 'Nice try smart guy!'
             ])
         ;
     }
