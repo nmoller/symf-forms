@@ -11,6 +11,7 @@
             <th>Title</th>
             <th>Author</th>
             <th>Published?</th>
+            <th>&nbsp;</th>
         </tr>
         </thead>
         <tbody>
@@ -31,6 +32,9 @@
                                 'action': 'unpublish'
                             }) }}" class="btn btn-sm btn-danger"> Unpublish</a>
                     {% endif %}
+                </td>
+                <td>
+                    <a href="{{ path('admin_article_edit', {id: article.id}) }}"><span class="fa fa-pencil"></span></a>
                 </td>
             </tr>
         {% endfor %}
