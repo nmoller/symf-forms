@@ -61,4 +61,12 @@ Have fun!
 
 ## Symfony forms
 
+```
+docker run --rm  \
+-v ${PWD}:/app  -u $(id -u):$(id -g) --link mysql01:db   \
+-e COMPOSER_HOME=/app/composer \
+  -w /app nmolleruq/phpcomposer:7.2  \
+   php bin/console make:form
+```
+
 
