@@ -26,6 +26,7 @@ class UserFixture extends BaseFixture
             if ($this->faker->boolean) {
                 $user->setTwitterUsername($this->faker->userName);
             }
+            $user->agreeTerms();
 
             $user->setPassword($this->passwordEncoder->encodePassword(
                 $user,
@@ -50,6 +51,7 @@ class UserFixture extends BaseFixture
                 $user,
                 'engage'
             ));
+            $user->agreeTerms();
 
             return $user;
         });
