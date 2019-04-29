@@ -13,8 +13,6 @@ $(document).ready(function(){
                 displayKey: 'email',
                 debounce: 500
             }
-        ]).on('autocomplete:selected', function(event, suggestion, dataset, context) {
-            console.log(event, suggestion, dataset, context);
-        });
+        ]);
     })
 });
