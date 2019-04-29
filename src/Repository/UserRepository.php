@@ -58,4 +58,19 @@ class UserRepository extends ServiceEntityRepository
             ->getQuery()
             ->execute();
     }
+
+    /**
+     * @param string $quryArg
+     * @param int $limit
+     * @return User[]
+     */
+    public function findAllMatching(string $queryArg, int $limit=5){
+        return $this->createQueryBuilder('u')
+            ->andWhere('u.email like :query')
+            ->setParameter('query', '%'.$queryArg.'%')
+            ->setMaxResults($limit)
+            ->getQuery()
+            ->getResult();
+            ;
+    }
 }

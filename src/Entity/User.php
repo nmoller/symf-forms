@@ -28,7 +28,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
-     * @Groups("main")
+     * @Groups({"main", "userapi"})
      * @Assert\NotBlank(message="Please enter an email.")
      * @Assert\Email(message="Not a valid email")
      */
