@@ -37,7 +37,9 @@ class ArticleFormType extends AbstractType
     {
         $builder
         ->add('title')
-        ->add('content')
+        ->add('content', null, [
+            'rows' => 15
+        ])
         ->add('publishedAt', DateTimeType::class, [
             'widget' => 'single_text'
         ])
