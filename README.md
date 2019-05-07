@@ -69,4 +69,8 @@ docker run --rm  \
    php bin/console make:form
 ```
 
+Appliquer seulement la dernière migration:
+```
+docker exec -it web01 php bin/console doctrine:migrations:execute --up  20190507175724
+```
 
