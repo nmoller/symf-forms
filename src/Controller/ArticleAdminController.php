@@ -76,6 +76,26 @@ class ArticleAdminController extends AbstractController
     }
 
     /**
+     * @Route("/admin/article/location-select", name="admin_article_location_select")
+     * @IsGranted("ROLE_ADMIN")
+     */
+    public function getSpecificLocationSelect(Request $request)
+    {
+        $article = new Article();
+        $article->setLocation($request->query->get('location'));
+        $form = $this->createForm(ArticleFormType::class, $article);
+
+        // No field? Return an empty response
+        if (!$form->has('specificLocationName')) {
+            return new Response(null, 204);
+        }
+
+        return $this->render('article_admin/_specific_location_name.html.twig', [
+            'articleForm' => $form->createView()
+        ]);
+    }
+
+    /**
      * @Route("/admin/article", name="admin_article_list")
      * @IsGranted("ROLE_ADMIN")
      */
