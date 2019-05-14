@@ -43,8 +43,6 @@ class ArticleFormType extends AbstractType
         $article = $options['data'] ?? null;
         $isEdit = $article && $article->getId();
 
-        $location = $article ? $article->getLocation() : null;
-
         $builder
         ->add('title')
         ->add('content', null, [
@@ -53,30 +51,38 @@ class ArticleFormType extends AbstractType
         ->add('author', UserSelectTextType::class, [
                 'disabled' => $isEdit
         ])
-            ->add('location', ChoiceType::class, [
-                'placeholder' => 'Choose a location',
-                'choices' => [
-                    'The Solar System' => 'solar_system',
-                    'Near a star' => 'star',
-                    'Interstellar Space' => 'interstellar_space'
-                ],
-                'required' => false
-            ])
+        ->add('location', ChoiceType::class, [
+            'placeholder' => 'Choose a location',
+            'choices' => [
+                'The Solar System' => 'solar_system',
+                'Near a star' => 'star',
+                'Interstellar Space' => 'interstellar_space'
+            ],
+            'required' => false
+        ])
         ;
-
-        if ($location){
-            $builder->add('specificLocationName', ChoiceType::class, [
-                'placeholder' => 'Where exactly?',
-                'choices' => $this->getLocationNameChoices($location),
-                'required' => false
-            ]);
-        }
 
         if ($options['include_published_at']) {
             $builder->add('publishedAt', DateTimeType::class, [
                 'widget' => 'single_text'
             ]);
         }
+
+        $builder->addEventListener(
+            FormEvents::PRE_SET_DATA,
+             function (FormEvent $event) {
+                /** @var Article|null $data */
+                $data = $event->getData();
+                if (!$data) {
+                    return;
+                }
+
+                $this->setupSpecificLocationNameField(
+                    $event->getForm(),
+                    $data->getLocation()
+                );
+             }
+        );
 
         $builder->get('location')->addEventListener(
             FormEvents::POST_SUBMIT,
